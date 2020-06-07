@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  direction: rtl;
+  background: #0f2027; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  font-family: "Rubik", sans-serif;
+  color: white;
+}
+
+i {
+  pointer-events: none;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  height: 60vh;
+}
+.interface {
+  display: flex;
+
+  flex-direction: column;
+  height: 40vh;
+  text-align: center;
+}
+
+.card {
+  border-radius: 1rem;
+  background-color: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.card_ui {
+  height: 250px;
+  width: 200px;
+  justify-self: center;
+}
+.card p {
+  font-weight: bold;
+  font-size: 2rem;
+}
+.card img {
+  height: 90px;
+  transition: all ease-in 0.5s;
+}
+
+.deck_cover img {
+  height: 250px;
+}
+.finalCard {
+  animation: finalCard 2s ease-in;
+  animation-fill-mode: backwards;
+}
+.headerText {
+  font-size: 3rem;
+}
+.buttons {
+}
+.btn {
+  color: white;
+  border: none;
+  padding: 0.4rem 2rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin: 1rem 0;
+}
+
+.drinkBtn {
+  align-self: center;
+  border-radius: 1rem;
+  color: black;
+}
+.btn:hover {
+  opacity: 0.8;
+}
+.red {
+  background-color: red;
+}
+
+.black {
+  background-color: black;
+  margin: 0 1rem;
+}
+
+#shots {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+
+.massage {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  transition: all 0.5s ease;
+}
+
+.massage span {
+  padding: 0.5rem 1.5rem;
+}
+.massage .correct {
+  background-color: green;
+}
+
+.massage .wrong {
+  background-color: red;
+}
+
+@keyframes shotsInc {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes finalCard {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 890px) {
+}
+@media (max-width: 760px) {
+  .interface {
+    padding: 1rem;
+  }
+  .btn {
+    font-size: 1.3rem;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+  }
+  .cards .card:last-child {
+    grid-column: 1 / span 2;
+  }
+
+  .card_ui {
+    height: 150px;
+    width: 80px;
+  }
+
+  .card img {
+    height: 70px;
+  }
+  .card p {
+    font-size: 1rem;
+  }
+
+  .deck_cover img {
+    height: 150px;
+  }
+
+  .finalCard {
+    grid-column: 2 span / 3;
+  }
+}

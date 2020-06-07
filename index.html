@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Driveer</title>
+
+    <!-- font awsome -->
+    <script
+      src="https://kit.fontawesome.com/cd555a857e.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- my css -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- <h1>נהג האוטבוס</h1> -->
+
+    <div class="cards">
+      <div class="card_container" id="card_deck"></div>
+      <div class="card_container" id="result_card_1"></div>
+      <div class="card_container" id="result_card_2"></div>
+    </div>
+
+    <div class="interface">
+      <h1 class="headerText">אדום או שחור?</h1>
+      <div class="buttons">
+        <button class="btn red">אדום</button>
+        <button class="btn black">שחור</button>
+      </div>
+      <p id="shots">שאטים בחוב: <span id="shotsTodrink">0</span></p>
+      <div class="massage"></div>
+    </div>
+    <!-- scripts -->
+    <script src="cards.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
