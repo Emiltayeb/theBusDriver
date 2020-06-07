@@ -148,6 +148,12 @@ i {
   }
 }
 @media (max-width: 890px) {
+  .cards {
+    height: 50vh;
+  }
+  .interface {
+    height: 50vh;
+  }
 }
 @media (max-width: 760px) {
   .interface {
@@ -161,7 +167,6 @@ i {
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
     justify-content: center;
-    height: 60vh;
   }
   .cards .card:last-child {
     grid-column: 1 / span 2;
@@ -185,5 +190,10 @@ i {
 
   .finalCard {
     grid-column: 2 span / 3;
+  }
+}
+
+@media (max-height: 640px) {
+  body {
   }
 }
