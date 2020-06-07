@@ -63,7 +63,7 @@ class Ui {
     setTimeout(() => {
       document.querySelector(".massage").innerHTML = "";
       this.btns.forEach((btn) => (btn.disabled = false));
-    }, 1500);
+    }, 2500);
   }
 
   changeQuestion(level) {

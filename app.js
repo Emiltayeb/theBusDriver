@@ -106,7 +106,7 @@ function higher_or_lower(card, elem) {
       ui.showMassage("טעות", "wrong");
       setTimeout(() => {
         reset();
-      }, 1500);
+      }, 2500);
     }
   } else if (choice == "fa-arrow-up") {
     if (cardValue > currentValue) {
@@ -118,7 +118,7 @@ function higher_or_lower(card, elem) {
       ui.showMassage("טעות", "wrong");
       setTimeout(() => {
         reset();
-      }, 1500);
+      }, 2500);
     }
   } else {
     if (cardValue === currentValue) {
@@ -129,7 +129,7 @@ function higher_or_lower(card, elem) {
       ui.showMassage("טעות", "wrong");
       setTimeout(() => {
         reset();
-      }, 1500);
+      }, 2500);
     }
     // הוא לחץ על על
   }
@@ -176,7 +176,7 @@ function inside_or_outside(card, elem) {
       ui.showMassage("טעות", "wrong");
       setTimeout(() => {
         reset();
-      }, 1500);
+      }, 2500);
     }
   } else if (choice == "בחוץ") {
     if (CurrentcardValue < lowCard || CurrentcardValue > highCard) {
@@ -188,7 +188,7 @@ function inside_or_outside(card, elem) {
       ui.showMassage("טעות", "wrong");
       setTimeout(() => {
         reset();
-      }, 1500);
+      }, 2500);
     }
   } else {
     if (CurrentcardValue === lowCard || CurrentcardValue == highCard) {
@@ -199,7 +199,7 @@ function inside_or_outside(card, elem) {
       ui.showMassage("טעות", "wrong");
       setTimeout(() => {
         reset();
-      }, 1500);
+      }, 2500);
     }
   }
 }
