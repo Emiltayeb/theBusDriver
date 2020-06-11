@@ -10,7 +10,8 @@ const ui = new Ui();
 // btns.forEach((btn) => btn.addEventListener("click", btn_Click));
 btns.addEventListener("click", btn_Click);
 //index for cards
-let card_index = 0;
+let card_index = 50;
+const resetTime = 1000;
 // index for what question are we in
 let level = 1;
 // כמה שאטים אתה צריך לשתות
@@ -21,22 +22,41 @@ init();
 
 function init() {
   ui.showCardBack();
+  document.getElementById("cardsLeft").innerHTML = 52 - card_index;
 }
 
 //מה שיקרה בכל קליק
 function btn_Click(e) {
   if (e.target.classList.contains("btn")) {
+    console.log("היאיקס של הקפלים בלחיצה " + card_index);
     let user_choice = e.target;
+
     const card = deck.deck[card_index];
     // כל לחיצה נראה קלף רנדומלי
 
-    ui.showRandomcard(card["suit"], card["value"], level);
-    // נשמור את האופציה שהמשתמש לחץ
+    //אם נגמרה לנו החפיסה
 
-    //נבדוק את השתובה
-    checkAnswer(level, card, user_choice);
-    //נעלה את הקארד אינקדקד
-    card_index++;
+    ui.showCardsLeft(card_index);
+
+    if (!(document.getElementById("cardsLeft").innerHTML == 0)) {
+      ui.showRandomcard(card["suit"], card["value"], level);
+
+      // נשמור את האופציה שהמשתמש לחץ
+      //נבדוק את השתובה
+      checkAnswer(level, card, user_choice);
+      //נעלה את הקארד אינקדקד
+      card_index++;
+    } else {
+      status = false;
+      card_index = 0;
+      ui.gameOver(status, shots, level, card_index);
+      level = 1;
+      ui.resetCardContainers();
+      ui.showCardBack();
+      deck.reset();
+
+      return;
+    }
   }
 }
 
@@ -55,12 +75,16 @@ function checkAnswer(level, card, user_choice) {
       final_Quest(card, user_choice, level);
       break;
   }
+
+  btns.removeEventListener("click", btn_Click);
+  setTimeout(() => {
+    btns.addEventListener("click", btn_Click);
+  }, 1000);
 }
 
 function red_Or_black(card, user_choice) {
   user_choice = user_choice.innerHTML;
   let color = card["suit"];
-  console.log(user_choice);
   if (user_choice == "אדום" && (color === "Hearts" || color == "Diamonds")) {
     // ui.showMassage("תשובה נכונה", "correct");
     level++;
@@ -94,7 +118,6 @@ function higher_or_lower(card, elem) {
   cardValue = switchValues(cardValue);
   currentValue = switchValues(currentValue);
 
-  console.log(cardValue, currentValue);
   if (choice == "fa-arrow-down") {
     // הוא לחץ על נמוך
     if (cardValue < currentValue) {
@@ -107,7 +130,7 @@ function higher_or_lower(card, elem) {
       shots++;
       setTimeout(() => {
         reset();
-      }, 1000);
+      }, resetTime);
     }
   } else if (choice == "fa-arrow-up") {
     if (cardValue > currentValue) {
@@ -120,11 +143,13 @@ function higher_or_lower(card, elem) {
       shots++;
       setTimeout(() => {
         reset();
-      }, 1000);
+      }, resetTime);
     }
   } else {
     if (cardValue === currentValue) {
-      ui.gameOver(true, shots, 4);
+      deck.reset();
+      card_index = 0;
+      ui.gameOver(true, shots, 4, card_index);
       level = 1;
       return;
     } else {
@@ -132,7 +157,7 @@ function higher_or_lower(card, elem) {
       shots++;
       setTimeout(() => {
         reset();
-      }, 1000);
+      }, resetTime);
     }
     // הוא לחץ על על
   }
@@ -154,9 +179,6 @@ function inside_or_outside(card, elem) {
   CurrentcardValue = switchValues(CurrentcardValue);
   firstCardvalue = switchValues(firstCardvalue);
   secondCardvalue = switchValues(secondCardvalue);
-  console.log(
-    `הקלף הכי ישן ${firstCardvalue}, הקלף השני  ${secondCardvalue}, הקלף עכשיו ${CurrentcardValue}`
-  );
 
   //צריך לבדוק מה הכי גדול
   if (firstCardvalue > secondCardvalue) {
@@ -166,7 +188,6 @@ function inside_or_outside(card, elem) {
     highCard = secondCardvalue;
     lowCard = firstCardvalue;
   }
-  console.log(`הקלף הגבוהה ${highCard} , הקלף הנמוך ${lowCard}`);
 
   if (choice == "בפנים") {
     // הוא לחץ על נמוך
@@ -180,7 +201,7 @@ function inside_or_outside(card, elem) {
       shots++;
       setTimeout(() => {
         reset();
-      }, 1000);
+      }, resetTime);
     }
   } else if (choice == "בחוץ") {
     if (CurrentcardValue < lowCard || CurrentcardValue > highCard) {
@@ -193,11 +214,13 @@ function inside_or_outside(card, elem) {
       shots++;
       setTimeout(() => {
         reset();
-      }, 1000);
+      }, resetTime);
     }
   } else {
     if (CurrentcardValue === lowCard || CurrentcardValue == highCard) {
-      ui.gameOver(true, shots, 4);
+      deck.reset();
+      card_index = 0;
+      ui.gameOver(true, shots, 4, card_index);
       level = 1;
       return;
     } else {
@@ -205,7 +228,7 @@ function inside_or_outside(card, elem) {
       shots++;
       setTimeout(() => {
         reset();
-      }, 1000);
+      }, resetTime);
     }
   }
 }
@@ -217,7 +240,7 @@ function final_Quest(card, user_choice) {
   ui.resetCardContainers();
   user_choice = user_choice.innerHTML;
   let color = card["suit"];
-  console.log(user_choice);
+
   if (user_choice == "אדום" && (color === "Hearts" || color == "Diamonds")) {
     status = true;
   } else if (
@@ -228,17 +251,16 @@ function final_Quest(card, user_choice) {
   } else {
     status = false;
   }
-  ui.gameOver(status, shots, level);
+  card_index = 0;
+  ui.gameOver(status, shots, level, card_index);
   level = 1;
 }
 
 function reset() {
-  console.log("reset");
-  card_index = 0;
   level = 1;
-  ui.lostRound(shots);
+  ui.lostRound(shots, level, status, card_index);
   shots = 0;
-  deck.reset();
+
   ui.resetCardContainers();
   ui.resetBtns();
   ui.resetInstruction();

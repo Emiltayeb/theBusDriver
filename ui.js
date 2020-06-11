@@ -34,7 +34,7 @@ class Ui {
     if (level == 4) {
       parent.classList.add("finalCard");
     } else {
-      parent.style.animation = "shotsInc 1s ease-in-out";
+      parent.style.animation = "shotsInc 0.7s ease-in-out";
     }
 
     parent.addEventListener("animationend", () => {
@@ -69,7 +69,6 @@ class Ui {
   }
 
   changeQuestion(level) {
-    console.log(level);
     switch (level) {
       case 1:
         this.question.innerHTML = "אדום או שחור?";
@@ -113,7 +112,8 @@ class Ui {
     this.btns[0].innerHTML = `בפנים`;
     this.btns[1].innerHTML = `בחוץ`;
   }
-  lostRound(shots, level, status) {
+  lostRound(shots, level, status, card_index) {
+    console.log(card_index);
     if (shots == 0 && status == false) {
       shots = 1;
     }
@@ -158,7 +158,9 @@ class Ui {
 
     btn.addEventListener("click", () => {
       this.btns.forEach((btn) => (btn.disabled = false));
-
+      let cardLeftDiv = document.getElementById("cardLeftDiv");
+      cardLeftDiv.innerHTML = `<p>קלפים שנותרו בחפיסה:<span id="cardsLeft">${52 -
+        card_index}</span></p>`;
       if (level == 4) {
         this.result_card.innerHTML = "";
         this.result_card.classList = "";
@@ -191,12 +193,13 @@ class Ui {
     }
   }
 
-  gameOver(status, shots, level) {
+  gameOver(status, shots, level, card_index) {
+    console.log(card_index);
     this.btns = document.querySelectorAll(".btn");
     document.querySelector(".buttons").style.display = "none";
     this.resetInstruction();
     this.resetBtns();
-    this.lostRound(shots, level, status);
+    this.lostRound(shots, level, status, card_index);
   }
   resetBtns() {
     this.btns = document.querySelectorAll(".btn");
@@ -209,5 +212,17 @@ class Ui {
   }
   resetInstruction() {
     document.querySelector(".headerText").style.display = "none";
+  }
+
+  showCardsLeft(card_index) {
+    console.log("האינדקס בתוך הפונקציה" + card_index);
+    let cardLeftDiv = document.getElementById("cardsLeft");
+
+    let cardsLeftNum = 52 - card_index;
+
+    if (cardsLeftNum > 0) {
+      cardsLeftNum--;
+      cardLeftDiv.innerHTML = cardsLeftNum;
+    }
   }
 }
