@@ -10,7 +10,7 @@ const ui = new Ui();
 // btns.forEach((btn) => btn.addEventListener("click", btn_Click));
 btns.addEventListener("click", btn_Click);
 //index for cards
-let card_index = 50;
+let card_index = 0;
 let cardsLeft;
 const resetTime = 1000;
 // index for what question are we in
