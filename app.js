@@ -10,7 +10,8 @@ const ui = new Ui();
 // btns.forEach((btn) => btn.addEventListener("click", btn_Click));
 btns.addEventListener("click", btn_Click);
 //index for cards
-let card_index = 0;
+let card_index = 50;
+let cardsLeft;
 const resetTime = 1000;
 // index for what question are we in
 let level = 1;
@@ -22,7 +23,7 @@ init();
 
 function init() {
   ui.showCardBack();
-  document.getElementById("cardsLeft").innerHTML = 52 - card_index;
+  cardsLeft = 52 - card_index;
 }
 
 //מה שיקרה בכל קליק
@@ -36,9 +37,10 @@ function btn_Click(e) {
 
     //אם נגמרה לנו החפיסה
 
-    ui.showCardsLeft(card_index);
+    // ui.showCardsLeft(card_index);
 
-    if (!(document.getElementById("cardsLeft").innerHTML == 0)) {
+    console.log(cardsLeft);
+    if (!(cardsLeft == 0)) {
       ui.showRandomcard(card["suit"], card["value"], level);
 
       // נשמור את האופציה שהמשתמש לחץ
@@ -46,15 +48,17 @@ function btn_Click(e) {
       checkAnswer(level, card, user_choice);
       //נעלה את הקארד אינקדקד
       card_index++;
+      cardsLeft--;
     } else {
-      status = false;
       card_index = 0;
-      ui.gameOver(status, shots, level, card_index);
+      ui.gameOver(false, shots, 1, card_index);
       level = 1;
       ui.resetCardContainers();
       ui.showCardBack();
       deck.reset();
-
+      document.getElementById("cardLeftDiv").innerHTML = "החפיסה נגמרה!";
+      cardsLeft = 52 - card_index;
+      shots = 0;
       return;
     }
   }
@@ -251,7 +255,9 @@ function final_Quest(card, user_choice) {
   } else {
     status = false;
   }
-  card_index = 0;
+  if ((status = false)) {
+    card_index = 0;
+  }
   ui.gameOver(status, shots, level, card_index);
   level = 1;
 }

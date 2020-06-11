@@ -157,10 +157,8 @@ class Ui {
     parent.insertAdjacentElement("beforeend", btn);
 
     btn.addEventListener("click", () => {
+      console.log(card_index);
       this.btns.forEach((btn) => (btn.disabled = false));
-      let cardLeftDiv = document.getElementById("cardLeftDiv");
-      cardLeftDiv.innerHTML = `<p>קלפים שנותרו בחפיסה:<span id="cardsLeft">${52 -
-        card_index}</span></p>`;
       if (level == 4) {
         this.result_card.innerHTML = "";
         this.result_card.classList = "";
@@ -173,6 +171,7 @@ class Ui {
       }
       btn.remove();
       this.drinkText.innerHTML = `שאטים בחוב: <span id="shotsTodrink">0</span>`;
+      document.getElementById("cardLeftDiv").innerHTML = "";
       document.querySelector(".buttons").style.display = "block";
       document.querySelector(".headerText").style.display = "block  ";
       this.drinkText.style.color = "white";
@@ -214,15 +213,15 @@ class Ui {
     document.querySelector(".headerText").style.display = "none";
   }
 
-  showCardsLeft(card_index) {
-    console.log("האינדקס בתוך הפונקציה" + card_index);
-    let cardLeftDiv = document.getElementById("cardsLeft");
+  // showCardsLeft(card_index) {
+  //   console.log("האינדקס בתוך הפונקציה" + card_index);
+  //   let cardLeftDiv = document.getElementById("cardsLeft");
 
-    let cardsLeftNum = 52 - card_index;
+  //   let cardsLeftNum = 52 - card_index;
 
-    if (cardsLeftNum > 0) {
-      cardsLeftNum--;
-      cardLeftDiv.innerHTML = cardsLeftNum;
-    }
-  }
+  //   if (cardsLeftNum > 0) {
+  //     cardsLeftNum--;
+  //     cardLeftDiv.innerHTML = cardsLeftNum;
+  //   }
+  // }
 }
