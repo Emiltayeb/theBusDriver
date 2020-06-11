@@ -62,7 +62,7 @@ function red_Or_black(card, user_choice) {
   let color = card["suit"];
   console.log(user_choice);
   if (user_choice == "אדום" && (color === "Hearts" || color == "Diamonds")) {
-    ui.showMassage("תשובה נכונה", "correct");
+    // ui.showMassage("תשובה נכונה", "correct");
     level++;
     ui.changeQuestion(level);
     return;
@@ -70,12 +70,12 @@ function red_Or_black(card, user_choice) {
     user_choice == "שחור" &&
     (color === "Spades" || color == "Clubs")
   ) {
-    ui.showMassage("תשובה נכונה", "correct");
+    // ui.showMassage("תשובה נכונה", "correct");
     level++;
     ui.changeQuestion(level);
     return;
   } else {
-    ui.showMassage("טעות", "wrong");
+    // ui.showMassage("טעות", "wrong");
     shots++;
     ui.wrongAnswer(shots);
   }
@@ -98,27 +98,29 @@ function higher_or_lower(card, elem) {
   if (choice == "fa-arrow-down") {
     // הוא לחץ על נמוך
     if (cardValue < currentValue) {
-      ui.showMassage("תשובה נכונה", "correct");
+      // ui.showMassage("תשובה נכונה", "correct");
       level++;
       ui.changeQuestion(level);
       return;
     } else {
-      ui.showMassage("טעות", "wrong");
+      // ui.showMassage("טעות", "wrong");
+      shots++;
       setTimeout(() => {
         reset();
-      }, 2500);
+      }, 1000);
     }
   } else if (choice == "fa-arrow-up") {
     if (cardValue > currentValue) {
-      ui.showMassage("תשובה נכונה", "correct");
+      // ui.showMassage("תשובה נכונה", "correct");
       level++;
       ui.changeQuestion(level);
       return;
     } else {
-      ui.showMassage("טעות", "wrong");
+      // ui.showMassage("טעות", "wrong");
+      shots++;
       setTimeout(() => {
         reset();
-      }, 2500);
+      }, 1000);
     }
   } else {
     if (cardValue === currentValue) {
@@ -126,10 +128,11 @@ function higher_or_lower(card, elem) {
       level = 1;
       return;
     } else {
-      ui.showMassage("טעות", "wrong");
+      // ui.showMassage("טעות", "wrong");
+      shots++;
       setTimeout(() => {
         reset();
-      }, 2500);
+      }, 1000);
     }
     // הוא לחץ על על
   }
@@ -168,27 +171,29 @@ function inside_or_outside(card, elem) {
   if (choice == "בפנים") {
     // הוא לחץ על נמוך
     if (CurrentcardValue < highCard && CurrentcardValue > lowCard) {
-      ui.showMassage("תשובה נכונה", "correct");
+      // ui.showMassage("תשובה נכונה", "correct");
       level++;
       ui.changeQuestion(level);
       return;
     } else {
-      ui.showMassage("טעות", "wrong");
+      // ui.showMassage("טעות", "wrong");
+      shots++;
       setTimeout(() => {
         reset();
-      }, 2500);
+      }, 1000);
     }
   } else if (choice == "בחוץ") {
     if (CurrentcardValue < lowCard || CurrentcardValue > highCard) {
-      ui.showMassage("תשובה נכונה", "correct");
+      // ui.showMassage("תשובה נכונה", "correct");
       level++;
       ui.changeQuestion(level);
       return;
     } else {
-      ui.showMassage("טעות", "wrong");
+      // ui.showMassage("טעות", "wrong");
+      shots++;
       setTimeout(() => {
         reset();
-      }, 2500);
+      }, 1000);
     }
   } else {
     if (CurrentcardValue === lowCard || CurrentcardValue == highCard) {
@@ -196,10 +201,11 @@ function inside_or_outside(card, elem) {
       level = 1;
       return;
     } else {
-      ui.showMassage("טעות", "wrong");
+      // ui.showMassage("טעות", "wrong");
+      shots++;
       setTimeout(() => {
         reset();
-      }, 2500);
+      }, 1000);
     }
   }
 }

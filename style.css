@@ -107,24 +107,7 @@ i {
 
 #shots {
   margin-top: 1rem;
-  font-size: 1.5rem;
-}
-
-.massage {
-  margin-top: 1rem;
-  font-size: 1.5rem;
-  transition: all 0.5s ease;
-}
-
-.massage span {
-  padding: 0.5rem 1.5rem;
-}
-.massage .correct {
-  background-color: green;
-}
-
-.massage .wrong {
-  background-color: red;
+  font-size: 2rem;
 }
 
 @keyframes shotsInc {

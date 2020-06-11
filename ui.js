@@ -49,9 +49,11 @@ class Ui {
     const shots = document.getElementById("shotsTodrink");
     shots.innerHTML = shotsCounter;
 
-    shots.style.animation = "shotsInc 1s ease-in-out";
+    shots.style.animation = "shotsInc 0.5s ease-in-out";
+    shots.style.color = "red";
+    shots.style.fontSize = "3 rem";
     shots.addEventListener("animationend", () => {
-      shots.style = "";
+      shots.style.animation = "";
     });
   }
 
@@ -112,12 +114,13 @@ class Ui {
     this.btns[1].innerHTML = `בחוץ`;
   }
   lostRound(shots, level, status) {
-    if (shots == 0) {
+    if (shots == 0 && status == false) {
       shots = 1;
     }
 
     this.btns.forEach((btn) => (btn.disabled = true));
     this.drinkText.innerHTML = "שתה " + shots + " שאטים / לגימות מהמשקה! ";
+    this.drinkText.style.color = "red";
 
     //יצירת כפתור סיימתי לשתות
 
@@ -125,15 +128,20 @@ class Ui {
     const btn = document.createElement("button");
     btn.classList.add("drinkBtn", "btn");
 
-    btn.innerHTML = "סיימתי לשתות.  תן לי לנסות שוב";
+    btn.innerHTML = "סיימתי לשתות";
     if (level == 4) {
       if (status) {
-        this.drinkText.innerHTML =
-          "כל הכבוד סיימת את המשחק! " +
-          "</br>" +
-          "שתה " +
-          shots +
-          " שאטים / לגימות מהמשקה!  ובחור מי ינהג באוטבוס ";
+        if (shots >= 1) {
+          this.drinkText.innerHTML =
+            "כל הכבוד סיימת את המשחק! " +
+            "</br>" +
+            "שתה " +
+            shots +
+            " שאטים / לגימות מהמשקה!  ובחור מי ינהג באוטבוס ";
+        } else {
+          this.drinkText.innerHTML =
+            "סיימת את המשחק בלי לשתות! י'א פיקח.. בחר נהג חדש";
+        }
         btn.innerHTML = "יש נהג חדש!";
         this.drinkText.style.color = "#99ff99";
       } else {
