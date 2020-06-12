@@ -255,9 +255,10 @@ function final_Quest(card, user_choice) {
   } else {
     status = false;
   }
-  if ((status = false)) {
+  if (status == false) {
     card_index = 0;
   }
+
   ui.gameOver(status, shots, level, card_index);
   level = 1;
 }
