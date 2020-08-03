@@ -1,3 +1,12 @@
+// handel insturction screen
+
+const instBtn = document.querySelector("#instBtn");
+instBtn.addEventListener("click", function (e) {
+  document.querySelector(".instruction-container").classList.add("hide");
+  document.querySelector("main").classList.remove("hide");
+  document.querySelector("main").classList.add("main");
+});
+
 const btns = document.querySelector(".buttons");
 
 // instaante deck
@@ -29,7 +38,6 @@ function init() {
 //מה שיקרה בכל קליק
 function btn_Click(e) {
   if (e.target.classList.contains("btn")) {
-    console.log("היאיקס של הקפלים בלחיצה " + card_index);
     let user_choice = e.target;
 
     const card = deck.deck[card_index];
@@ -37,9 +45,6 @@ function btn_Click(e) {
 
     //אם נגמרה לנו החפיסה
 
-    // ui.showCardsLeft(card_index);
-
-    console.log(cardsLeft);
     if (!(cardsLeft == 0)) {
       ui.showRandomcard(card["suit"], card["value"], level);
 
@@ -56,7 +61,7 @@ function btn_Click(e) {
       ui.resetCardContainers();
       ui.showCardBack();
       deck.reset();
-      document.getElementById("cardLeftDiv").innerHTML = "החפיסה נגמרה!";
+      document.getElementById("cardLeftDiv").innerHTML = "Out of cards!";
       cardsLeft = 52 - card_index;
       shots = 0;
       return;
@@ -89,13 +94,13 @@ function checkAnswer(level, card, user_choice) {
 function red_Or_black(card, user_choice) {
   user_choice = user_choice.innerHTML;
   let color = card["suit"];
-  if (user_choice == "אדום" && (color === "Hearts" || color == "Diamonds")) {
+  if (user_choice == "Red" && (color === "Hearts" || color == "Diamonds")) {
     // ui.showMassage("תשובה נכונה", "correct");
     level++;
     ui.changeQuestion(level);
     return;
   } else if (
-    user_choice == "שחור" &&
+    user_choice == "Black" &&
     (color === "Spades" || color == "Clubs")
   ) {
     // ui.showMassage("תשובה נכונה", "correct");
@@ -193,7 +198,7 @@ function inside_or_outside(card, elem) {
     lowCard = firstCardvalue;
   }
 
-  if (choice == "בפנים") {
+  if (choice == "Between") {
     // הוא לחץ על נמוך
     if (CurrentcardValue < highCard && CurrentcardValue > lowCard) {
       // ui.showMassage("תשובה נכונה", "correct");
@@ -207,7 +212,7 @@ function inside_or_outside(card, elem) {
         reset();
       }, resetTime);
     }
-  } else if (choice == "בחוץ") {
+  } else if (choice == "Outside") {
     if (CurrentcardValue < lowCard || CurrentcardValue > highCard) {
       // ui.showMassage("תשובה נכונה", "correct");
       level++;
@@ -245,10 +250,10 @@ function final_Quest(card, user_choice) {
   user_choice = user_choice.innerHTML;
   let color = card["suit"];
 
-  if (user_choice == "אדום" && (color === "Hearts" || color == "Diamonds")) {
+  if (user_choice == "Red" && (color === "Hearts" || color == "Diamonds")) {
     status = true;
   } else if (
-    user_choice == "שחור" &&
+    user_choice == "Black" &&
     (color === "Spades" || color == "Clubs")
   ) {
     status = true;

@@ -5,12 +5,14 @@ class Ui {
     this.result_card_2 = document.getElementById("result_card_2");
     this.drinkText = document.getElementById("shots");
     this.question = document.querySelector(".headerText");
-    this.btns = document.querySelectorAll(".btn");
+    this.btns = document.querySelectorAll("main .btn");
   }
 
   showRandomcard(suit, value, level) {
+    console.log(suit, value, level);
     // בוחרים את הדיב אלייה נכניס את הקלף
     let parent;
+    console.log(level);
     switch (level) {
       case 1:
         parent = this.card_deck;
@@ -33,6 +35,7 @@ class Ui {
     }
     if (level == 4) {
       parent.classList.add("finalCard");
+      console.log(parent);
     } else {
       parent.style.animation = "shotsInc 0.7s ease-in-out";
     }
@@ -71,18 +74,18 @@ class Ui {
   changeQuestion(level) {
     switch (level) {
       case 1:
-        this.question.innerHTML = "אדום או שחור?";
+        this.question.innerHTML = "Red or Black?";
         break;
       case 2:
-        this.question.innerHTML = "גבוהה, נמוך או על?";
+        this.question.innerHTML = "Higher, Lower or Equal?";
         this.higher_or_lower_Btns();
         break;
       case 3:
-        this.question.innerHTML = "בפנים, בחוץ או על?";
+        this.question.innerHTML = "Between, Outside, or Equal?";
         this.inside_outside_Btns();
         break;
       case 4:
-        this.question.innerHTML = "אדום או שחור?";
+        this.question.innerHTML = "Red or Black?";
         ui.resetBtns();
         document.querySelector(".buttons").style.display = "block ";
         break;
@@ -101,25 +104,24 @@ class Ui {
     this.btns[1].innerHTML = `<i class="fas fa-arrow-down"></i>`;
 
     //ניצור אופציה לכפתור על
-    const parent = document.querySelector(".buttons");
+    const parent = document.querySelector("main .buttons");
     const btn = document.createElement("button");
-    btn.innerHTML = "על";
+    btn.innerHTML = "Equal";
     btn.style.color = "black";
     btn.classList.add("btn");
     parent.insertAdjacentElement("beforeend", btn);
   }
   inside_outside_Btns() {
-    this.btns[0].innerHTML = `בפנים`;
-    this.btns[1].innerHTML = `בחוץ`;
+    this.btns[0].innerHTML = `Between`;
+    this.btns[1].innerHTML = `Outside`;
   }
   lostRound(shots, level, status, card_index) {
-    console.log(card_index);
     if (shots == 0 && status == false) {
       shots = 1;
     }
 
     this.btns.forEach((btn) => (btn.disabled = true));
-    this.drinkText.innerHTML = "שתה " + shots + " שאטים / לגימות מהמשקה! ";
+    this.drinkText.innerHTML = "Drink " + shots + " sips from your drink! ";
     this.drinkText.style.color = "red";
 
     //יצירת כפתור סיימתי לשתות
@@ -128,36 +130,36 @@ class Ui {
     const btn = document.createElement("button");
     btn.classList.add("drinkBtn", "btn");
 
-    btn.innerHTML = "סיימתי לשתות";
+    btn.innerHTML = " finished drinking";
     if (level == 4) {
       if (status) {
         if (shots >= 1) {
           this.drinkText.innerHTML =
-            "כל הכבוד סיימת את המשחק! " +
+            "Well done you finished the game! " +
             "</br>" +
-            "שתה " +
+            "drink " +
             shots +
-            " שאטים / לגימות מהמשקה!  ובחור מי ינהג באוטבוס ";
+            "sips from your drink, and choose the next player";
         } else {
           this.drinkText.innerHTML =
-            "סיימת את המשחק בלי לשתות! י'א פיקח.. בחר נהג חדש";
+            "Wow! you finished the game wihtout making a single mistake..choose another player";
         }
-        btn.innerHTML = "יש נהג חדש!";
+        btn.innerHTML = "New player found!";
         this.drinkText.style.color = "#99ff99";
       } else {
         this.drinkText.innerHTML =
-          "היית כל כך קרוב..  " +
+          "Wrong. you were so close.. " +
           "</br>" +
-          "שתה " +
+          "drink " +
           shots +
-          " שאטים / לגימות מהמשקה! ";
+          "sips from your drink!";
         this.drinkText.style.color = "red";
       }
     }
     parent.insertAdjacentElement("beforeend", btn);
 
     btn.addEventListener("click", () => {
-      console.log(card_index);
+      console.log("here");
       this.btns.forEach((btn) => (btn.disabled = false));
       if (level == 4) {
         this.result_card.innerHTML = "";
@@ -170,7 +172,7 @@ class Ui {
         this.showCardBack();
       }
       btn.remove();
-      this.drinkText.innerHTML = `שאטים בחוב: <span id="shotsTodrink">0</span>`;
+      this.drinkText.innerHTML = `Shots in owe: <span id="shotsTodrink">0</span>`;
       document.getElementById("cardLeftDiv").innerHTML = "";
       document.querySelector(".buttons").style.display = "block";
       document.querySelector(".headerText").style.display = "block  ";
@@ -178,9 +180,12 @@ class Ui {
     });
   }
   resetCardContainers() {
-    let divs = document.querySelectorAll(".card");
+    console.log("[resetcardcontainers] i have to be called on click");
+    let divs = document.querySelectorAll("main .card");
+
     if (level != 4) {
       divs.forEach((div) => {
+        console.log(div);
         div.innerHTML = "";
         div.classList = "";
       });
@@ -193,35 +198,23 @@ class Ui {
   }
 
   gameOver(status, shots, level, card_index) {
-    console.log(card_index);
-    this.btns = document.querySelectorAll(".btn");
+    this.btns = document.querySelectorAll("main .btn");
     document.querySelector(".buttons").style.display = "none";
     this.resetInstruction();
     this.resetBtns();
     this.lostRound(shots, level, status, card_index);
   }
   resetBtns() {
-    this.btns = document.querySelectorAll(".btn");
+    this.btns = document.querySelectorAll("main .btn");
+
     document.querySelector(".buttons").style.display = "none";
 
     //מתחילים רק עם אדום שחור
-    this.btns[0].innerHTML = `אדום`;
-    this.btns[1].innerHTML = `שחור`;
+    this.btns[0].innerHTML = `Red`;
+    this.btns[1].innerHTML = `Black`;
     if (this.btns.length >= 3) this.btns[2].remove();
   }
   resetInstruction() {
     document.querySelector(".headerText").style.display = "none";
   }
-
-  // showCardsLeft(card_index) {
-  //   console.log("האינדקס בתוך הפונקציה" + card_index);
-  //   let cardLeftDiv = document.getElementById("cardsLeft");
-
-  //   let cardsLeftNum = 52 - card_index;
-
-  //   if (cardsLeftNum > 0) {
-  //     cardsLeftNum--;
-  //     cardLeftDiv.innerHTML = cardsLeftNum;
-  //   }
-  // }
 }

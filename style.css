@@ -7,7 +7,6 @@
 }
 
 body {
-  direction: rtl;
   background: #0f2027; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
@@ -29,6 +28,64 @@ i {
   pointer-events: none;
 }
 
+.instruction-container {
+  padding: 1rem;
+  direction: ltr;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: wheat;
+  max-width: 80%;
+  margin: 0 auto;
+  height: 100vh;
+  position: relative;
+  text-align: center;
+}
+
+#instBtndiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.instruction-container h1 {
+  flex: 1 1 1rem;
+  font-size: 4rem;
+  margin-top: 3rem;
+}
+
+.content {
+  max-width: 80%;
+  text-align: center;
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  justify-content: start;
+  align-self: center;
+}
+
+.cardType-img {
+  height: 50px;
+  width: 40px;
+}
+.instruction-container p {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: black;
+}
+
+.instruction-container input[type="submit"] {
+  margin: 0 1rem;
+}
+
+.instruction-container #btn {
+  margin-top: 2rem;
+}
+
+.instruction-container.hide,
+main.hide {
+  display: none;
+}
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -77,7 +134,9 @@ i {
 .headerText {
   font-size: 3rem;
 }
-.buttons {
+
+.light-green {
+  background-color: lightgreen;
 }
 .btn {
   color: white;
@@ -176,7 +235,15 @@ i {
   }
 }
 
-@media (max-height: 640px) {
-  body {
+@media (max-height: 670px) {
+  .instruction-container h1 {
+    font-size: 3rem;
+  }
+  .content p {
+    font-size: 1rem;
+  }
+
+  #instBtndiv {
+    margin: 0;
   }
 }

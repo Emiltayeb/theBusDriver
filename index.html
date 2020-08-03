@@ -16,22 +16,47 @@
   <body>
     <!-- <h1>נהג האוטבוס</h1> -->
 
-    <div class="cards">
-      <div class="card_container" id="card_deck"></div>
-      <div class="card_container" id="result_card_1"></div>
-      <div class="card_container" id="result_card_2"></div>
-    </div>
-
-    <div class="interface">
-      <h1 class="headerText">אדום או שחור?</h1>
-      <div class="buttons">
-        <button class="btn red">אדום</button>
-        <button class="btn black">שחור</button>
+    <div class="instruction-container">
+      <h1>Welcome To The Bus-Driver!</h1>
+      <div class="content">
+        <p>
+          It's simple. you're job is to answer all the 4 question right and not
+          make even one mistake on the way.
+        </p>
+        <p>
+          A mistake = 1 sip from your drink.
+        </p>
+        <p>Think you can do it?</p>
+        <div id="instBtndiv">
+          <img class="cardType-img" src="images/Spades.png" alt="" />
+          <input
+            id="instBtn"
+            class="btn light-green"
+            type="submit"
+            value="YES"
+          />
+          <img class="cardType-img" src="images/Hearts.png" alt="" />
+        </div>
       </div>
-      <p id="cardLeftDiv"></p>
-      <p id="shots">שאטים בחוב: <span id="shotsTodrink">0</span></p>
-      <div class="massage"></div>
     </div>
+    <main class="hide">
+      <div class="cards">
+        <div class="card_container" id="card_deck"></div>
+        <div class="card_container" id="result_card_1"></div>
+        <div class="card_container" id="result_card_2"></div>
+      </div>
+
+      <div class="interface">
+        <h1 class="headerText">Red or Black?</h1>
+        <div class="buttons">
+          <button class="btn red">Red</button>
+          <button class="btn black">Black</button>
+        </div>
+        <p id="cardLeftDiv"></p>
+        <p id="shots">sips in owe: <span id="shotsTodrink">0</span></p>
+        <div class="massage"></div>
+      </div>
+    </main>
     <!-- scripts -->
     <script src="cards.js"></script>
     <script src="ui.js"></script>
