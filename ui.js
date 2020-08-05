@@ -48,10 +48,18 @@ class Ui {
     <p>${value}</p>
   `;
   }
+
+  showCardBack() {
+    this.card_deck.innerHTML = `
+    <img src="images/card_back.jpg" "/>
+    `;
+    this.card_deck.classList.add("card_ui", "deck_cover");
+  }
+
   wrongAnswer(shotsCounter) {
+    console.log(`[ui.js] - wronganswe, shots: ${shotsCounter}`);
     const shots = document.getElementById("shotsTodrink");
     shots.innerHTML = shotsCounter;
-
     shots.style.animation = "shotsInc 0.5s ease-in-out";
     shots.style.color = "red";
     shots.style.fontSize = "3 rem";
@@ -60,18 +68,24 @@ class Ui {
     });
   }
 
-  showMassage(massage, className) {
-    this.btns.forEach((btn) => (btn.disabled = true));
-    document.querySelector(".massage").innerHTML = `
-    <span class="${className}">${massage}</span>
-    `;
-    setTimeout(() => {
-      document.querySelector(".massage").innerHTML = "";
-      this.btns.forEach((btn) => (btn.disabled = false));
-    }, 2500);
+  inside_outside_Btns() {
+    this.btns[0].innerHTML = `Between`;
+    this.btns[1].innerHTML = `Outside`;
   }
 
+  // showMassage(massage, className) {
+  //   this.btns.forEach((btn) => (btn.disabled = true));
+  //   document.querySelector(".massage").innerHTML = `
+  //   <span class="${className}">${massage}</span>
+  //   `;
+  //   setTimeout(() => {
+  //     document.querySelector(".massage").innerHTML = "";
+  //     this.btns.forEach((btn) => (btn.disabled = false));
+  //   }, 2500);
+  // }
+
   changeQuestion(level) {
+    console.log("[us.ji] changeQuestion ", `level: ${level} `);
     switch (level) {
       case 1:
         this.question.innerHTML = "Red or Black?";
@@ -92,13 +106,6 @@ class Ui {
     }
   }
 
-  showCardBack() {
-    this.card_deck.innerHTML = `
-    <img src="images/card_back.jpg" "/>
-    `;
-    this.card_deck.classList.add("card_ui", "deck_cover");
-  }
-
   higher_or_lower_Btns() {
     this.btns[0].innerHTML = `<i class="fas fa-arrow-up"></i>`;
     this.btns[1].innerHTML = `<i class="fas fa-arrow-down"></i>`;
@@ -111,15 +118,9 @@ class Ui {
     btn.classList.add("btn");
     parent.insertAdjacentElement("beforeend", btn);
   }
-  inside_outside_Btns() {
-    this.btns[0].innerHTML = `Between`;
-    this.btns[1].innerHTML = `Outside`;
-  }
-  lostRound(shots, level, status, card_index) {
-    if (shots == 0 && status == false) {
-      shots = 1;
-    }
 
+  lostRound(shots, level, status, card_index) {
+    //צריך לעשות ריסט כי אנחנו מתחילים את המשחק מחדש
     this.btns.forEach((btn) => (btn.disabled = true));
     this.drinkText.innerHTML = "Drink " + shots + " sips from your drink! ";
     this.drinkText.style.color = "red";
@@ -130,6 +131,7 @@ class Ui {
     const btn = document.createElement("button");
     btn.classList.add("drinkBtn", "btn");
 
+    console.log(btn);
     btn.innerHTML = " finished drinking";
     if (level == 4) {
       if (status) {
@@ -154,25 +156,27 @@ class Ui {
           shots +
           "sips from your drink!";
         this.drinkText.style.color = "red";
+        shots = 0;
       }
     }
+
     parent.insertAdjacentElement("beforeend", btn);
 
-    btn.addEventListener("click", () => {
-      console.log("here");
+    btn.addEventListener("click", (e) => {
+      console.log(e);
+      console.log("ui.js btn click");
       this.btns.forEach((btn) => (btn.disabled = false));
-      if (level == 4) {
+      if (level === 4) {
         this.result_card.innerHTML = "";
         this.result_card.classList = "";
-
-        level = 1;
         this.resetCardContainers();
         this.changeQuestion(level);
-
         this.showCardBack();
       }
+
       btn.remove();
-      this.drinkText.innerHTML = `Shots in owe: <span id="shotsTodrink">0</span>`;
+      shots = 0;
+      this.drinkText.innerHTML = `Shots in owe: <span id="shotsTodrink">${shots}</span>`;
       document.getElementById("cardLeftDiv").innerHTML = "";
       document.querySelector(".buttons").style.display = "block";
       document.querySelector(".headerText").style.display = "block  ";

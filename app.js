@@ -13,9 +13,10 @@ const btns = document.querySelector(".buttons");
 let deck = new Card_deck();
 deck.creatDeck(suits, values);
 deck.shuffel();
-console.log(deck);
+console.log(deck.deck.slice(0, 10));
 // instante ui
 const ui = new Ui();
+
 // btns.forEach((btn) => btn.addEventListener("click", btn_Click));
 btns.addEventListener("click", btn_Click);
 //index for cards
@@ -36,18 +37,15 @@ function init() {
 }
 
 //מה שיקרה בכל קליק
+
 function btn_Click(e) {
   if (e.target.classList.contains("btn")) {
     let user_choice = e.target;
-
     const card = deck.deck[card_index];
     // כל לחיצה נראה קלף רנדומלי
-
     //אם נגמרה לנו החפיסה
-
     if (!(cardsLeft == 0)) {
       ui.showRandomcard(card["suit"], card["value"], level);
-
       // נשמור את האופציה שהמשתמש לחץ
       //נבדוק את השתובה
       checkAnswer(level, card, user_choice);
@@ -55,21 +53,23 @@ function btn_Click(e) {
       card_index++;
       cardsLeft--;
     } else {
-      card_index = 0;
-      ui.gameOver(false, shots, 1, card_index);
-      level = 1;
-      ui.resetCardContainers();
-      ui.showCardBack();
-      deck.reset();
-      document.getElementById("cardLeftDiv").innerHTML = "Out of cards!";
-      cardsLeft = 52 - card_index;
-      shots = 0;
-      return;
+      //נגמרו הקלפים
+      // card_index = 0;
+      // ui.gameOver(false, shots, 1, card_index);
+      // level = 1;
+      // ui.resetCardContainers();
+      // ui.showCardBack();
+      // deck.reset();
+      // document.getElementById("cardLeftDiv").innerHTML = "Out of cards!";
+      // cardsLeft = 52 - card_index;
+      // shots = 0;
+      // return;
     }
   }
 }
 
 function checkAnswer(level, card, user_choice) {
+  console.log("[app.js] checkanswer ", `level: ${level} `);
   switch (level) {
     case 1:
       red_Or_black(card, user_choice, level);
@@ -93,23 +93,19 @@ function checkAnswer(level, card, user_choice) {
 
 function red_Or_black(card, user_choice) {
   user_choice = user_choice.innerHTML;
+
   let color = card["suit"];
-  if (user_choice == "Red" && (color === "Hearts" || color == "Diamonds")) {
-    // ui.showMassage("תשובה נכונה", "correct");
-    level++;
-    ui.changeQuestion(level);
-    return;
-  } else if (
-    user_choice == "Black" &&
-    (color === "Spades" || color == "Clubs")
+  if (
+    (user_choice == "Red" && (color === "Hearts" || color == "Diamonds")) ||
+    (user_choice === "Black" && (color === "Spades" || color == "Clubs"))
   ) {
     // ui.showMassage("תשובה נכונה", "correct");
     level++;
     ui.changeQuestion(level);
     return;
   } else {
-    // ui.showMassage("טעות", "wrong");
     shots++;
+    console.log("[app.js - red or black] wrong answer . shots:", shots);
     ui.wrongAnswer(shots);
   }
 }
@@ -137,6 +133,8 @@ function higher_or_lower(card, elem) {
     } else {
       // ui.showMassage("טעות", "wrong");
       shots++;
+      console.log("[app.js - rhigher or lower] wrong answer . shots:", shots);
+      ui.wrongAnswer(shots);
       setTimeout(() => {
         reset();
       }, resetTime);
@@ -150,6 +148,9 @@ function higher_or_lower(card, elem) {
     } else {
       // ui.showMassage("טעות", "wrong");
       shots++;
+      console.log("[app.js - rhigher or lower] wrong answer . shots:", shots);
+      ui.wrongAnswer(shots);
+
       setTimeout(() => {
         reset();
       }, resetTime);
@@ -164,6 +165,8 @@ function higher_or_lower(card, elem) {
     } else {
       // ui.showMassage("טעות", "wrong");
       shots++;
+      ui.wrongAnswer(shots);
+      console.log("[app.js - rhigher or lower] wrong answer . shots:", shots);
       setTimeout(() => {
         reset();
       }, resetTime);
@@ -208,6 +211,7 @@ function inside_or_outside(card, elem) {
     } else {
       // ui.showMassage("טעות", "wrong");
       shots++;
+      console.log("[app.js -inside_or_outside ] wrong answer . shots:", shots);
       setTimeout(() => {
         reset();
       }, resetTime);
@@ -221,6 +225,7 @@ function inside_or_outside(card, elem) {
     } else {
       // ui.showMassage("טעות", "wrong");
       shots++;
+      console.log("[app.js - inside_or_outside] wrong answer . shots:", shots);
       setTimeout(() => {
         reset();
       }, resetTime);
@@ -234,6 +239,7 @@ function inside_or_outside(card, elem) {
       return;
     } else {
       // ui.showMassage("טעות", "wrong");
+      console.log("[app.js - inside_or_outside] wrong answer . shots:", shots);
       shots++;
       setTimeout(() => {
         reset();
@@ -269,10 +275,14 @@ function final_Quest(card, user_choice) {
 }
 
 function reset() {
+  console.log("[app.js - reset]  . shots:", shots);
   level = 1;
+  if (shots == 0 && status == false) {
+    shots = 1;
+  }
   ui.lostRound(shots, level, status, card_index);
+  // console.log("[app.js - reset]  . shots after calling last round:", shots);
   shots = 0;
-
   ui.resetCardContainers();
   ui.resetBtns();
   ui.resetInstruction();
